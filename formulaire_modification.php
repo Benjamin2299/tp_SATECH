@@ -1,4 +1,5 @@
 <?php
+<<<<<<< HEAD
 // formulaire_modification.php - Version corrigée
 
 session_start();
@@ -16,6 +17,31 @@ if (!isset($_GET['matricule']) || empty($_GET['matricule'])) {
 }
 
 $matricule = sanitize($_GET['matricule']);
+=======
+session_start();
+
+$host = 'localhost'; 
+$db = 'Gestion_Etudiant'; 
+$user = 'root'; 
+$pass = '';
+
+try {
+    $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass, [
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC
+    ]);
+} catch (PDOException $e) {
+    die("Erreur de connexion : " . $e->getMessage());
+}
+
+// Vérifier si un matricule est passé en paramètre
+if (!isset($_GET['matricule']) || empty($_GET['matricule'])) {
+    header("Location: liste_etudiants.php?error=Matricule non spécifié");
+    exit();
+}
+
+$matricule = $_GET['matricule'];
+>>>>>>> 8342b65ad63fab5ca317108f4a9f20060c67fdef
 
 // Récupérer les données de l'étudiant
 try {
@@ -34,11 +60,19 @@ try {
     $etudiant = $stmt->fetch();
     
     if (!$etudiant) {
+<<<<<<< HEAD
         redirectWithError('liste_etudiants.php', 'Étudiant non trouvé');
     }
 } catch (PDOException $e) {
     error_log("Erreur formulaire_modification.php: " . $e->getMessage());
     redirectWithError('liste_etudiants.php', 'Erreur lors de la récupération des données');
+=======
+        header("Location: liste_etudiants.php?error=Étudiant non trouvé");
+        exit();
+    }
+} catch (PDOException $e) {
+    die("Erreur lors de la récupération des données : " . $e->getMessage());
+>>>>>>> 8342b65ad63fab5ca317108f4a9f20060c67fdef
 }
 
 // Récupérer les données pour les listes déroulantes
@@ -59,6 +93,7 @@ foreach ($filieres as $filiere) {
         'departement' => $departement ? $departement['intitulé_Dep'] : 'Non spécifié'
     ];
 }
+<<<<<<< HEAD
 
 // Gérer les messages de session
 $errorMessage = '';
@@ -96,12 +131,15 @@ $niveaux = [
     'D2' => 'Doctorat 2',
     'D3' => 'Doctorat 3'
 ];
+=======
+>>>>>>> 8342b65ad63fab5ca317108f4a9f20060c67fdef
 ?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<<<<<<< HEAD
     <title>Modifier un Étudiant - Gestion des Étudiants</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -166,6 +204,11 @@ $niveaux = [
             margin-bottom: 15px;
         }
     </style>
+=======
+    <title>Modifier un Étudiant</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+>>>>>>> 8342b65ad63fab5ca317108f4a9f20060c67fdef
 </head>
 <body>
 <div class="container">
@@ -187,11 +230,16 @@ $niveaux = [
             <div class="form-container">
                 <h2 class="section-title">
                     <i class="fas fa-user-edit"></i> Modification de l'étudiant
+<<<<<<< HEAD
                     <small style="font-size: 1rem; color: var(--primary-color); display: block; margin-top: 5px;">
+=======
+                    <small style="font-size: 1rem; color: var(--primary-color);">
+>>>>>>> 8342b65ad63fab5ca317108f4a9f20060c67fdef
                         Matricule : <?= htmlspecialchars($etudiant['matricule']) ?>
                     </small>
                 </h2>
                 
+<<<<<<< HEAD
                 <!-- Message d'information -->
                 <div class="alert alert-info mb-4">
                     <div style="display: flex; align-items: flex-start; gap: 10px;">
@@ -223,10 +271,29 @@ $niveaux = [
                             <i class="fas fa-check-circle" style="margin-top: 2px;"></i>
                             <div><?= $successMessage ?></div>
                         </div>
+=======
+                <div class="alert alert-info mb-4">
+                    <i class="fas fa-info-circle"></i>
+                    Modifiez les champs nécessaires. Le matricule ne peut pas être modifié.
+                </div>
+                
+                <?php if (isset($_GET['error'])): ?>
+                    <div class="alert alert-error mb-4">
+                        <i class="fas fa-exclamation-circle"></i> 
+                        <?= htmlspecialchars($_GET['error']) ?>
+                    </div>
+                <?php endif; ?>
+                
+                <?php if (isset($_GET['success'])): ?>
+                    <div class="alert alert-success mb-4">
+                        <i class="fas fa-check-circle"></i> 
+                        <?= htmlspecialchars($_GET['success']) ?>
+>>>>>>> 8342b65ad63fab5ca317108f4a9f20060c67fdef
                     </div>
                 <?php endif; ?>
                 
                 <!-- Informations actuelles -->
+<<<<<<< HEAD
                 <div class="current-info">
                     <h3 style="color: var(--primary-dark); margin-bottom: 15px; display: flex; align-items: center; gap: 10px;">
                         <i class="fas fa-user-check"></i> Informations actuelles
@@ -266,10 +333,38 @@ $niveaux = [
                 </div>
                 
                 <!-- Formulaire de modification -->
+=======
+                <div class="current-info mb-4" style="
+                    background: linear-gradient(135deg, #f8fdff, #e6f7ff);
+                    padding: 20px;
+                    border-radius: var(--border-radius);
+                    border-left: 4px solid var(--primary-color);
+                ">
+                    <h3 style="color: var(--primary-dark); margin-bottom: 15px;">
+                        <i class="fas fa-user-check"></i> Informations actuelles
+                    </h3>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                        <div>
+                            <strong>Nom :</strong> <?= htmlspecialchars($etudiant['nom']) ?>
+                        </div>
+                        <div>
+                            <strong>Prénom :</strong> <?= htmlspecialchars($etudiant['prenom']) ?>
+                        </div>
+                        <div>
+                            <strong>Filière :</strong> <?= htmlspecialchars($etudiant['filiere_intitule']) ?>
+                        </div>
+                        <div>
+                            <strong>Département :</strong> <?= htmlspecialchars($etudiant['departement_intitule']) ?>
+                        </div>
+                    </div>
+                </div>
+                
+>>>>>>> 8342b65ad63fab5ca317108f4a9f20060c67fdef
                 <form action="modifier_etudiant.php" method="POST" id="update-form" onsubmit="return validateForm()">
                     <input type="hidden" name="matricule" value="<?= htmlspecialchars($etudiant['matricule']) ?>">
                     
                     <div class="form-grid">
+<<<<<<< HEAD
                         <!-- Nom -->
                         <div class="form-group">
                             <label class="required">Nom</label>
@@ -306,15 +401,46 @@ $niveaux = [
                             <select name="sexe" id="sexe" class="form-control" required>
                                 <option value="M" <?= $formData['sexe'] === 'M' ? 'selected' : '' ?>>Masculin</option>
                                 <option value="F" <?= $formData['sexe'] === 'F' ? 'selected' : '' ?>>Féminin</option>
+=======
+                        <!-- Nom et Prénom -->
+                        <div class="form-group">
+                            <label class="required">Nom</label>
+                            <input type="text" name="nom" id="nom" class="form-control" 
+                                   value="<?= htmlspecialchars($etudiant['nom']) ?>"
+                                   placeholder="Entrez le nom de l'étudiant"
+                                   required>
+                            <div class="error-message" id="error-nom"></div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label class="required">Prénom</label>
+                            <input type="text" name="prenom" id="prenom" class="form-control"
+                                   value="<?= htmlspecialchars($etudiant['prenom']) ?>"
+                                   placeholder="Entrez le prénom de l'étudiant"
+                                   required>
+                            <div class="error-message" id="error-prenom"></div>
+                        </div>
+                        
+                        <!-- Sexe et Date de naissance -->
+                        <div class="form-group">
+                            <label class="required">Sexe</label>
+                            <select name="sexe" id="sexe" class="form-control" required>
+                                <option value="M" <?= $etudiant['sexe'] == 'M' ? 'selected' : '' ?>>Masculin</option>
+                                <option value="F" <?= $etudiant['sexe'] == 'F' ? 'selected' : '' ?>>Féminin</option>
+>>>>>>> 8342b65ad63fab5ca317108f4a9f20060c67fdef
                             </select>
                             <div class="error-message" id="error-sexe"></div>
                         </div>
                         
+<<<<<<< HEAD
                         <!-- Date de naissance -->
+=======
+>>>>>>> 8342b65ad63fab5ca317108f4a9f20060c67fdef
                         <div class="form-group">
                             <label class="required">Date de Naissance</label>
                             <input type="date" name="date_naissance" id="date_naissance" 
                                    class="form-control" 
+<<<<<<< HEAD
                                    value="<?= htmlspecialchars($formData['date_naissance']) ?>"
                                    max="<?= date('Y-m-d') ?>"
                                    min="<?= date('Y-m-d', strtotime('-60 years')) ?>"
@@ -336,6 +462,23 @@ $niveaux = [
                                     <option value="<?= $f['id'] ?>" 
                                             data-departement="<?= htmlspecialchars($f['departement']) ?>"
                                             <?= $formData['id_filiere'] == $f['id'] ? 'selected' : '' ?>>
+=======
+                                   value="<?= $etudiant['date_de_naissance'] ?>"
+                                   max="<?= date('Y-m-d') ?>"
+                                   required>
+                            <div class="error-message" id="error-date"></div>
+                        </div>
+                        
+                        <!-- Filière et Niveau -->
+                        <div class="form-group">
+                            <label class="required">Filière</label>
+                            <select name="id_filiere" id="filiere_select" class="form-control" required>
+                                <option value="" disabled>Sélectionner une filière</option>
+                                <?php foreach ($filieresWithDepartements as $f): ?>
+                                    <option value="<?= $f['id'] ?>" 
+                                            data-departement="<?= htmlspecialchars($f['departement']) ?>"
+                                            <?= $etudiant['id_filiere'] == $f['id'] ? 'selected' : '' ?>>
+>>>>>>> 8342b65ad63fab5ca317108f4a9f20060c67fdef
                                         <?= htmlspecialchars($f['intitule']) ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -343,6 +486,7 @@ $niveaux = [
                             <div class="error-message" id="error-filiere"></div>
                         </div>
                         
+<<<<<<< HEAD
                         <!-- Niveau -->
                         <div class="form-group">
                             <label class="required">Niveau</label>
@@ -351,6 +495,26 @@ $niveaux = [
                                 <?php foreach ($niveaux as $code => $label): ?>
                                     <option value="<?= $code ?>" 
                                             <?= $formData['niveau'] === $code ? 'selected' : '' ?>>
+=======
+                        <div class="form-group">
+                            <label class="required">Niveau</label>
+                            <select name="niveau" id="niveau" class="form-control" required>
+                                <?php 
+                                $niveaux = [
+                                    'L1' => 'Licence 1',
+                                    'L2' => 'Licence 2', 
+                                    'L3' => 'Licence 3',
+                                    'M1' => 'Master 1',
+                                    'M2' => 'Master 2',
+                                    'D1' => 'Doctorat 1',
+                                    'D2' => 'Doctorat 2',
+                                    'D3' => 'Doctorat 3'
+                                ];
+                                foreach ($niveaux as $code => $label): 
+                                ?>
+                                    <option value="<?= $code ?>" 
+                                        <?= $etudiant['niveau'] == $code ? 'selected' : '' ?>>
+>>>>>>> 8342b65ad63fab5ca317108f4a9f20060c67fdef
                                         <?= $label ?> (<?= $code ?>)
                                     </option>
                                 <?php endforeach; ?>
@@ -362,10 +526,17 @@ $niveaux = [
                         <div class="form-group">
                             <label class="required">Nationalité</label>
                             <select name="code_nationalite" id="code_nationalite" class="form-control" required>
+<<<<<<< HEAD
                                 <option value="">Sélectionner une nationalité</option>
                                 <?php foreach ($nationalites as $nat): ?>
                                     <option value="<?= $nat['code_nationalite'] ?>" 
                                             <?= $formData['code_nationalite'] === $nat['code_nationalite'] ? 'selected' : '' ?>>
+=======
+                                <option value="" disabled>Sélectionner une nationalité</option>
+                                <?php foreach ($nationalites as $nat): ?>
+                                    <option value="<?= $nat['code_nationalite'] ?>"
+                                        <?= $etudiant['code_nationalite'] == $nat['code_nationalite'] ? 'selected' : '' ?>>
+>>>>>>> 8342b65ad63fab5ca317108f4a9f20060c67fdef
                                         <?= htmlspecialchars($nat['intitulé_Nat']) ?>
                                     </option>
                                 <?php endforeach; ?>
@@ -376,6 +547,7 @@ $niveaux = [
                         <!-- Matricule (non modifiable) -->
                         <div class="form-group" style="grid-column: 1 / -1;">
                             <label>Matricule</label>
+<<<<<<< HEAD
                             <div class="matricule-display">
                                 <i class="fas fa-id-card"></i> 
                                 <?= htmlspecialchars($etudiant['matricule']) ?>
@@ -415,6 +587,41 @@ $niveaux = [
                         </small>
                     </div>
                 </div>
+=======
+                            <div style="
+                                background: #f8f9fa;
+                                padding: 12px 15px;
+                                border-radius: var(--border-radius-sm);
+                                font-family: monospace;
+                                font-size: 1.2rem;
+                                font-weight: bold;
+                                color: var(--primary-dark);
+                                border: 2px solid var(--light-gray);
+                            ">
+                                <i class="fas fa-id-card"></i> 
+                                <?= htmlspecialchars($etudiant['matricule']) ?>
+                            </div>
+                            <small class="form-text">
+                                Le matricule est généré automatiquement et ne peut pas être modifié.
+                            </small>
+                        </div>
+                        
+                        <!-- Boutons -->
+                        <div class="form-actions" style="grid-column: 1 / -1;">
+                            <button type="submit" class="btn btn-success">
+                                <i class="fas fa-save"></i> Enregistrer les modifications
+                            </button>
+                            <a href="liste_etudiants.php" class="btn btn-secondary">
+                                <i class="fas fa-times"></i> Annuler
+                            </a>
+                            <button type="button" class="btn btn-danger" 
+                                    onclick="confirmDelete('<?= $etudiant['matricule'] ?>')">
+                                <i class="fas fa-trash"></i> Supprimer l'étudiant
+                            </button>
+                        </div>
+                    </div>
+                </form>
+>>>>>>> 8342b65ad63fab5ca317108f4a9f20060c67fdef
             </div>
         </main>
 
@@ -425,6 +632,7 @@ $niveaux = [
 </div>
 
 <script>
+<<<<<<< HEAD
 // Données des filières pour JavaScript
 const filieresData = <?= json_encode($filieresWithDepartements) ?>;
 
@@ -512,6 +720,15 @@ function validateForm() {
     
     document.querySelectorAll('.form-control').forEach(input => {
         input.style.borderColor = '';
+=======
+// Validation du formulaire
+function validateForm() {
+    let isValid = true;
+    const errors = document.querySelectorAll('.error-message');
+    errors.forEach(error => {
+        error.textContent = '';
+        error.style.display = 'none';
+>>>>>>> 8342b65ad63fab5ca317108f4a9f20060c67fdef
     });
     
     // Validation du nom
@@ -519,7 +736,10 @@ function validateForm() {
     if (nom.length < 2) {
         document.getElementById('error-nom').textContent = 'Le nom doit contenir au moins 2 caractères';
         document.getElementById('error-nom').style.display = 'block';
+<<<<<<< HEAD
         document.getElementById('nom').style.borderColor = 'var(--danger-color)';
+=======
+>>>>>>> 8342b65ad63fab5ca317108f4a9f20060c67fdef
         isValid = false;
     }
     
@@ -528,7 +748,10 @@ function validateForm() {
     if (prenom.length < 2) {
         document.getElementById('error-prenom').textContent = 'Le prénom doit contenir au moins 2 caractères';
         document.getElementById('error-prenom').style.display = 'block';
+<<<<<<< HEAD
         document.getElementById('prenom').style.borderColor = 'var(--danger-color)';
+=======
+>>>>>>> 8342b65ad63fab5ca317108f4a9f20060c67fdef
         isValid = false;
     }
     
@@ -537,6 +760,7 @@ function validateForm() {
     if (dateNaissance) {
         const birthDate = new Date(dateNaissance);
         const today = new Date();
+<<<<<<< HEAD
         let age = today.getFullYear() - birthDate.getFullYear();
         const monthDiff = today.getMonth() - birthDate.getMonth();
         if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < birthDate.getDate())) {
@@ -547,10 +771,18 @@ function validateForm() {
             document.getElementById('error-date').textContent = `L'étudiant doit avoir au moins 16 ans`;
             document.getElementById('error-date').style.display = 'block';
             document.getElementById('date_naissance').style.borderColor = 'var(--danger-color)';
+=======
+        const age = today.getFullYear() - birthDate.getFullYear();
+        
+        if (age < 16) {
+            document.getElementById('error-date').textContent = 'L\'étudiant doit avoir au moins 16 ans';
+            document.getElementById('error-date').style.display = 'block';
+>>>>>>> 8342b65ad63fab5ca317108f4a9f20060c67fdef
             isValid = false;
         }
     }
     
+<<<<<<< HEAD
     // Validation de la filière
     const filiere = document.getElementById('filiere_select').value;
     if (!filiere) {
@@ -592,6 +824,9 @@ function validateForm() {
             submitBtn.style.backgroundColor = '';
         }, 2000);
         
+=======
+    if (!isValid) {
+>>>>>>> 8342b65ad63fab5ca317108f4a9f20060c67fdef
         // Défiler vers la première erreur
         const firstError = document.querySelector('.error-message[style*="display: block"]');
         if (firstError) {
@@ -602,6 +837,7 @@ function validateForm() {
     return isValid;
 }
 
+<<<<<<< HEAD
 // Réinitialiser le formulaire
 function resetForm() {
     if (confirm('Êtes-vous sûr de vouloir réinitialiser le formulaire ? Toutes les modifications seront perdues.')) {
@@ -648,6 +884,12 @@ function confirmDelete(matricule) {
         } else {
             alert('Suppression annulée. Le texte entré ne correspond pas.');
         }
+=======
+// Confirmation de suppression
+function confirmDelete(matricule) {
+    if (confirm('Voulez-vous vraiment supprimer cet étudiant ? Cette action est irréversible.')) {
+        window.location.href = 'supprimer_etudiant.php?matricule=' + matricule;
+>>>>>>> 8342b65ad63fab5ca317108f4a9f20060c67fdef
     }
 }
 
@@ -655,6 +897,7 @@ function confirmDelete(matricule) {
 document.addEventListener('DOMContentLoaded', function() {
     // Mettre la date max pour la date de naissance (aujourd'hui)
     document.getElementById('date_naissance').max = new Date().toISOString().split('T')[0];
+<<<<<<< HEAD
     
     // Min date (60 ans)
     const minDate = new Date();
@@ -693,6 +936,8 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('update-form').addEventListener('submit', () => {
         formModified = false;
     });
+=======
+>>>>>>> 8342b65ad63fab5ca317108f4a9f20060c67fdef
 });
 </script>
 </body>
