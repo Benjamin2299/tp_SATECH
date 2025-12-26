@@ -170,6 +170,9 @@ $pourcentageFeminin = $totalEtudiants > 0 ? round(($statsSexeArray['F'] ?? 0) / 
             <h1><i class="fas fa-chart-bar"></i> Tableau de Bord</h1>
             <p class="header-subtitle">Statistiques et analyses du système de gestion des étudiants</p>
             <nav>
+                <a href="index.php" class="btn btn-home">
+                    <i class="fas fa-home"></i> Accueil
+                </a>
                 <a href="liste_etudiants.php" class="btn btn-primary">
                     <i class="fas fa-list"></i> Liste des Étudiants
                 </a>
@@ -179,39 +182,49 @@ $pourcentageFeminin = $totalEtudiants > 0 ? round(($statsSexeArray['F'] ?? 0) / 
             </nav>
         </header>
 
-        <main>
-            <!-- Statistiques principales -->
-            <div class="stats-grid mb-4">
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-user-graduate"></i>
+        <main> 
+            <!-- Statistiques principales en ligne -->
+            <div class="horizontal-stats-container mb-4">
+                <div class="horizontal-stats-grid">
+                    <div class="horizontal-stat-card">
+                        <div class="horizontal-stat-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <div class="horizontal-stat-content">
+                            <div class="horizontal-stat-value"><?= $totalEtudiants ?></div>
+                            <div class="horizontal-stat-label">Total Étudiants</div>
+                        </div>
                     </div>
-                    <div class="stat-value"><?= $totalEtudiants ?></div>
-                    <div class="stat-label">Total Étudiants</div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-male"></i>
+                    
+                    <div class="horizontal-stat-card">
+                        <div class="horizontal-stat-icon">
+                            <i class="fas fa-male"></i>
+                        </div>
+                        <div class="horizontal-stat-content">
+                            <div class="horizontal-stat-value"><?= $statsSexeArray['M'] ?? 0 ?></div>
+                            <div class="horizontal-stat-label">Masculin</div>
+                        </div>
                     </div>
-                    <div class="stat-value"><?= $statsSexeArray['M'] ?? 0 ?></div>
-                    <div class="stat-label">Masculin</div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-female"></i>
+                    
+                    <div class="horizontal-stat-card">
+                        <div class="horizontal-stat-icon">
+                            <i class="fas fa-female"></i>
+                        </div>
+                        <div class="horizontal-stat-content">
+                            <div class="horizontal-stat-value"><?= $statsSexeArray['F'] ?? 0 ?></div>
+                            <div class="horizontal-stat-label">Féminin</div>
+                        </div>
                     </div>
-                    <div class="stat-value"><?= $statsSexeArray['F'] ?? 0 ?></div>
-                    <div class="stat-label">Féminin</div>
-                </div>
-                
-                <div class="stat-card">
-                    <div class="stat-icon">
-                        <i class="fas fa-graduation-cap"></i>
+                    
+                    <div class="horizontal-stat-card">
+                        <div class="horizontal-stat-icon">
+                            <i class="fas fa-graduation-cap"></i>
+                        </div>
+                        <div class="horizontal-stat-content">
+                            <div class="horizontal-stat-value"><?= count($statsFiliere) ?></div>
+                            <div class="horizontal-stat-label">Filières</div>
+                        </div>
                     </div>
-                    <div class="stat-value"><?= count($statsFiliere) ?></div>
-                    <div class="stat-label">Filières</div>
                 </div>
             </div>
 
