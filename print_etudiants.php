@@ -9,7 +9,7 @@ $sql = "SELECT E.*, F.intitulé AS filiere_intitule, D.intitulé_Dep AS departem
         LEFT JOIN `Filière` F ON E.id_filiere = F.id_filiere
         LEFT JOIN `Département` D ON F.id_Dep = D.id_Dep 
         LEFT JOIN `Nationalité` N ON E.code_nationalite = N.code_nationalite
-        ORDER BY CAST(SUBSTRING(matricule, -7) AS UNSIGNED) DESC, matricule DESC";
+        ORDER BY CAST(SUBSTRING(matricule, -5) AS UNSIGNED) DESC, matricule DESC";
 
 $stmt = $pdo->query($sql);
 $etudiants = $stmt->fetchAll();

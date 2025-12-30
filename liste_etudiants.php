@@ -49,7 +49,7 @@ foreach ($filters as $get_key => $condition) {
     }
 }
 
-$sql .= " ORDER BY CAST(SUBSTRING(E.matricule, -7) AS UNSIGNED) DESC, E.matricule DESC, E.nom, E.prenom";
+$sql .= " ORDER BY CAST(SUBSTRING(E.matricule, -5) AS UNSIGNED) DESC, E.matricule DESC, E.nom, E.prenom";
 
 try {
     $stmt = $pdo->prepare($sql);
@@ -76,6 +76,7 @@ foreach ($statsSexe as $stat) {
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
+
 <body>
 <div class="container">
     <div class="main-container">

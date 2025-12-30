@@ -1,10 +1,7 @@
 <?php
 session_start();
 
-$host = 'localhost'; 
-$db = 'Gestion_Etudiant'; 
-$user = 'root'; 
-$pass = '';
+require_once 'config/database.php';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8mb4", $user, $pass, [
@@ -51,7 +48,7 @@ $derniersEtudiants = $pdo->query("
     SELECT E.*, F.intitulé as filiere 
     FROM Etudiant E 
     LEFT JOIN Filière F ON E.id_filiere = F.id_filiere 
-    ORDER BY E.matricule DESC 
+    ORDER BY CAST(SUBSTRING(E.matricule, -5) AS UNSIGNED) DESC, E.matricule DESC, E.nom, E.prenom
     LIMIT 5
 ")->fetchAll();
 
@@ -176,7 +173,7 @@ $pourcentageFeminin = $totalEtudiants > 0 ? round(($statsSexeArray['F'] ?? 0) / 
                 <a href="liste_etudiants.php" class="btn btn-primary">
                     <i class="fas fa-list"></i> Liste des Étudiants
                 </a>
-                <a href="formulaire_creation.php" class="btn btn-success">
+                <a href="liste_etudiants.php?openModal=true" class="btn btn-success">
                     <i class="fas fa-user-plus"></i> Nouvel Étudiant
                 </a>
             </nav>

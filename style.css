@@ -8,7 +8,7 @@
 :root {
     /* Palette bleu marine */
     --primary-color: #1a365d;
-    --primary-dark: #0f294d;
+    --primary-dark: #2d4b8e;
     --primary-light: #2d4b8e;
     --primary-lighter: #4a6fbf;
     
@@ -69,8 +69,10 @@ body {
     line-height: 1.6;
     min-height: 100vh;
     padding: var(--spacing-2xl);
+    overflow-x: hidden; /* Empêche le défilement horizontal */
+    width: 100%;
+    max-width: 100vw; /* Limite la largeur à la largeur de la fenêtre */
 }
-
 /* ========== LAYOUT ========== */
 .container {
     max-width: 1600px;
@@ -564,7 +566,7 @@ main {
     transform: none !important;
 }
 
-/* ========== MODALES MODERNES - PLUS PETITES ========== */
+/* ========== MODALES MODERNES - RESPONSIVE ========== */
 .modal {
     display: none;
     position: fixed;
@@ -577,8 +579,9 @@ main {
     z-index: 1000;
     align-items: center;
     justify-content: center;
-    padding: var(--spacing-lg);
+    padding: var(--spacing-md);
     animation: fadeIn 0.3s ease;
+    overflow-y: auto;
 }
 
 .modal.active {
@@ -597,56 +600,63 @@ main {
 @keyframes slideUp {
     from {
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(30px) scale(0.95);
     }
     to {
         opacity: 1;
-        transform: translateY(0);
+        transform: translateY(0) scale(1);
     }
 }
 
-/* Modale plus compacte et plus étroite avec structure en deux colonnes */
+/* Modale responsive avec largeur flexible */
 .modal-content {
     background: white;
-    border-radius: var(--border-radius);
+    border-radius: var(--border-radius-lg);
     box-shadow: var(--shadow-xl);
-    max-width: 450px; /* Réduit de 550px à 450px */
     width: 100%;
-    max-height: 85vh;
+    max-width: 90px;
+    max-height: 500vh;
     overflow-y: auto;
     animation: slideUp 0.4s ease;
+    display: flex;
+    flex-direction: column;
 }
 
 .modal-header {
     background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
     color: white;
-    padding: 0.75rem 1.25rem; /* Réduit le padding */
+    padding: 1rem 1.5rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-radius: var(--border-radius) var(--border-radius) 0 0;
+    border-radius: var(--border-radius-lg) var(--border-radius-lg) 0 0;
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    flex-shrink: 0;
 }
 
 .modal-header h3 {
-    font-size: 1.1rem; /* Réduit la taille de police */
+    font-size: 1.2rem;
     font-weight: 600;
     display: flex;
     align-items: center;
     gap: 0.5rem;
     margin: 0;
+    flex: 1;
 }
 
 .modal-header h3 i {
-    font-size: 1rem; /* Réduit la taille de l'icône */
+    font-size: 1.1rem;
 }
 
 .close-button {
     background: rgba(255, 255, 255, 0.15);
     border: none;
     color: white;
-    font-size: 1.25rem; /* Légèrement réduit */
-    width: 32px; /* Réduit la taille */
-    height: 32px;
+    font-size: 1.3rem;
+    width: 36px;
+    height: 36px;
     border-radius: 50%;
     cursor: pointer;
     display: flex;
@@ -655,118 +665,281 @@ main {
     transition: all var(--transition-base);
     padding: 0;
     line-height: 1;
+    flex-shrink: 0;
+    margin-left: 0.5rem;
 }
 
 .close-button:hover {
     background: rgba(255, 255, 255, 0.25);
-    transform: rotate(90deg);
+    transform: rotate(90deg) scale(1.1);
 }
 
 .modal-body {
-    padding: 1.25rem; /* Réduit le padding */
+    padding: 1rem 2rem;
+    flex: 1;
+    overflow-y: auto;
 }
 
-/* Formulaires dans la modale avec structure en deux colonnes */
+/* Formulaires dans la modale avec structure responsive */
 .modal-body .form-grid-2col {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Deux colonnes égales */
-    gap: 0.75rem; /* Espacement réduit entre les colonnes */
-    margin-bottom: 0.75rem;
+    grid-template-columns: repeat(3, 1fr); 
+    /* OU */
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 1rem;
 }
 
-/* Les groupes de formulaire prennent toute la largeur de leur colonne */
+/* Les groupes de formulaire */
 .modal-body .form-group {
-    margin-bottom: 0.75rem; /* Espacement vertical réduit */
+    margin-bottom: 1rem;
 }
 
 /* Dernier champ centré - occupe les deux colonnes */
 .modal-body .form-group.center {
-    grid-column: span 2; /* Prend les deux colonnes */
+    grid-column: span 2;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
     margin: 0.5rem auto 0.75rem;
-    max-width: 80%; /* Limite la largeur pour le centrer */
+    width: 100%;
+    max-width: none;
 }
 
 .modal-body .form-group label {
     display: block;
-    margin-bottom: 0.25rem; /* Réduit */
+    margin-bottom: 0.5rem;
     font-weight: 600;
     color: var(--dark-color);
-    font-size: 0.85rem; /* Légèrement réduit */
+    font-size: 0.9rem;
 }
 
 .modal-body .form-control {
     width: 100%;
-    padding: 0.5rem 0.75rem; /* Réduit le padding */
-    border: 1px solid var(--medium-gray);
+    padding: 0.75rem 1rem;
+    border: 2px solid var(--light-gray);
     border-radius: var(--border-radius-sm);
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     transition: all var(--transition-base);
     background: white;
-    height: 2.25rem; /* Hauteur fixe pour uniformité */
-}
-
-/* Pour le champ centré, on peut ajuster la largeur */
-.modal-body .form-group.center .form-control {
-    width: 100%;
+    min-height: 46px;
+    box-sizing: border-box;
 }
 
 .modal-body .form-control:focus {
     outline: none;
     border-color: var(--primary-color);
-    box-shadow: 0 0 0 2px rgba(102, 126, 234, 0.1);
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.15);
+}
+
+/* Pour les textarea */
+.modal-body textarea.form-control {
+    min-height: 100px;
+    resize: vertical;
+    padding: 0.75rem 1rem;
+    line-height: 1.5;
+}
+
+/* Pour les select */
+.modal-body select.form-control {
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%232d3748' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 1rem center;
+    background-size: 16px;
+    padding-right: 2.5rem;
 }
 
 /* Actions du formulaire */
 .modal-body .form-actions {
     display: flex;
-    gap: 0.5rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
     justify-content: flex-end;
-    margin-top: 1rem;
-    padding-top: 1rem;
-    border-top: 1px solid var(--light-gray);
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 2px solid var(--light-gray);
 }
 
 /* Boutons dans la modale */
 .modal-body .btn {
-    padding: 0.5rem 1rem;
-    font-size: 0.9rem;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
     border-radius: var(--border-radius-sm);
+    min-width: 100px;
+    flex: 1;
+    max-width: 150px;
 }
 
-/* Hauteur uniforme pour les select */
-.modal-body select.form-control {
-    height: 2.25rem;
-    padding-top: 0.375rem;
-    padding-bottom: 0.375rem;
+.modal-body .btn-primary {
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
 }
 
-/* Ajustements pour petits écrans - passe en une colonne */
-@media (max-width: 500px) {
+.modal-body .btn-secondary {
+    background: var(--light-gray);
+    color: var(--dark-color);
+}
+
+.modal-body .btn-secondary:hover {
+    background: var(--medium-gray);
+}
+
+/* ========== RESPONSIVE DES MODALES ========== */
+
+/* Tablettes */
+@media (max-width: 768px) {
+    .modal {
+        padding: var(--spacing-sm);
+        align-items: flex-start;
+        padding-top: 2rem;
+    }
+    
     .modal-content {
         max-width: 95%;
-        margin: 0 10px;
+        max-height: 85vh;
+        margin: 0 auto;
     }
     
-    .modal-body .form-grid-2col {
-        grid-template-columns: 1fr; /* Une seule colonne */
-        gap: 0.5rem;
+    .modal-header {
+        padding: 0.75rem 1rem;
     }
     
-    .modal-body .form-group.center {
-        grid-column: span 1; /* Reprend une colonne */
-        max-width: 100%;
+    .modal-header h3 {
+        font-size: 1.1rem;
     }
     
     .modal-body {
         padding: 1rem;
     }
     
+    .modal-body .form-grid-2col {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+    }
+    
+    .modal-body .form-group.center {
+        max-width: 100%;
+    }
+    
+    .modal-body .form-actions {
+        flex-direction: column;
+    }
+    
+    .modal-body .btn {
+        width: 100%;
+        max-width: none;
+        justify-content: center;
+    }
+}
+
+/* Mobiles */
+@media (max-width: 480px) {
+    .modal {
+        padding: var(--spacing-xs);
+        padding-top: 1rem;
+    }
+    
+    .modal-content {
+        max-width: 100%;
+        max-height: 95vh;
+        border-radius: var(--border-radius);
+    }
+    
     .modal-header {
+        padding: 0.5rem 0.75rem;
+        border-radius: var(--border-radius) var(--border-radius) 0 0;
+    }
+    
+    .modal-header h3 {
+        font-size: 1rem;
+        gap: 0.25rem;
+    }
+    
+    .modal-header h3 i {
+        font-size: 0.9rem;
+    }
+    
+    .close-button {
+        width: 32px;
+        height: 32px;
+        font-size: 1.1rem;
+    }
+    
+    .modal-body {
+        padding: 0.75rem;
+    }
+    
+    .modal-body .form-group label {
+        font-size: 0.85rem;
+        margin-bottom: 0.25rem;
+    }
+    
+    .modal-body .form-control {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+        min-height: 42px;
+    }
+    
+    .modal-body textarea.form-control {
+        min-height: 80px;
+    }
+    
+    .modal-body .form-actions {
+        margin-top: 1rem;
+        padding-top: 1rem;
+        gap: 0.5rem;
+    }
+    
+    .modal-body .btn {
         padding: 0.5rem 1rem;
+        font-size: 0.9rem;
+    }
+}
+
+/* Très petits écrans (téléphones en portrait) */
+@media (max-width: 360px) {
+    .modal-header h3 {
+        font-size: 0.9rem;
+    }
+    
+    .modal-body .form-control {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.6rem;
+    }
+    
+    .modal-body .btn {
+        font-size: 0.85rem;
+        padding: 0.4rem 0.8rem;
+    }
+}
+
+/* Pour les écrans en mode paysage sur mobile */
+@media (max-height: 600px) and (orientation: landscape) {
+    .modal {
+        align-items: flex-start;
+        padding-top: 1rem;
+        padding-bottom: 1rem;
+    }
+    
+    .modal-content {
+        max-height: 95vh;
+    }
+    
+    .modal-body {
+        padding: 0.75rem 1rem;
+    }
+    
+    .modal-body .form-grid-2col {
+        gap: 0.5rem;
+    }
+    
+    .modal-body .form-group {
+        margin-bottom: 0.5rem;
+    }
+    
+    .modal-body .form-control {
+        min-height: 38px;
+        padding: 0.4rem 0.75rem;
     }
 }
 
